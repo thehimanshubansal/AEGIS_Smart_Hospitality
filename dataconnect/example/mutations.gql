@@ -1,0 +1,234 @@
+# dataconnect/example/mutations.gql
+
+mutation upsertUserLogin($firebaseUid: String!, $email: String!, $displayName: String, $role: String!) @auth(level: PUBLIC) {
+  userLogin_upsert(data: {
+    firebaseUid: $firebaseUid,
+    email: $email,
+    displayName: $displayName,
+    role: $role
+  })
+}
+
+mutation createGuest($firebaseUid: String, $email: String, $name: String!, $roomNumber: String, $status: String!, $checkOut: Timestamp!, $photoUrl: String) @auth(level: PUBLIC) {
+  guest_insert(data: {
+    firebaseUid: $firebaseUid,
+    email: $email,
+    name: $name,
+    roomNumber: $roomNumber,
+    status: $status,
+    checkOut: $checkOut,
+    photoUrl: $photoUrl
+  })
+}
+
+mutation updateGuest(
+  $id: UUID!, 
+  $name: String, 
+  $email: String, 
+  $firebaseUid: String, 
+  $status: String, 
+  $roomNumber: String, 
+  $loginToken: String, 
+  $roomId: UUID, 
+  $qrPayload: String,
+  $idNumber: String,
+  $contact: String,
+  $address: String,
+  $checkOut: Timestamp,
+  $loginEmail: String,
+  $loginPassword: String,
+  $photoUrl: String
+) @auth(level: PUBLIC) {
+  guest_update(id: $id, data: {
+    name: $name,
+    email: $email,
+    firebaseUid: $firebaseUid,
+    status: $status,
+    roomNumber: $roomNumber,
+    loginToken: $loginToken,
+    roomId: $roomId,
+    qrPayload: $qrPayload,
+    idNumber: $idNumber,
+    contact: $contact,
+    address: $address,
+    checkOut: $checkOut,
+    loginEmail: $loginEmail,
+    loginPassword: $loginPassword,
+    photoUrl: $photoUrl
+  })
+}
+
+mutation createStaff(
+  $firebaseUid: String, 
+  $email: String, 
+  $loginPassword: String,
+  $name: String!, 
+  $role: String!, 
+  $status: String!,
+  $employeeId: String,
+  $department: String,
+  $phone: String,
+  $emergencyContact: String,
+  $bloodGroup: String,
+  $joiningDate: Timestamp,
+  $validTill: Timestamp,
+  $photoUrl: String
+) @auth(level: PUBLIC) {
+  staff_insert(data: {
+    firebaseUid: $firebaseUid,
+    email: $email,
+    loginPassword: $loginPassword,
+    name: $name,
+    role: $role,
+    status: $status,
+    employeeId: $employeeId,
+    department: $department,
+    phone: $phone,
+    emergencyContact: $emergencyContact,
+    bloodGroup: $bloodGroup,
+    joiningDate: $joiningDate,
+    validTill: $validTill,
+    photoUrl: $photoUrl
+  })
+}
+
+mutation updateStaff(
+  $id: UUID!, 
+  $name: String, 
+  $email: String, 
+  $firebaseUid: String, 
+  $role: String, 
+  $department: String, 
+  $status: String,
+  $phone: String,
+  $emergencyContact: String,
+  $bloodGroup: String,
+  $joiningDate: Timestamp,
+  $validTill: Timestamp,
+  $photoUrl: String,
+  $employeeId: String
+) @auth(level: PUBLIC) {
+  staff_update(id: $id, data: {
+    name: $name,
+    email: $email,
+    firebaseUid: $firebaseUid,
+    role: $role,
+    department: $department,
+    status: $status,
+    phone: $phone,
+    emergencyContact: $emergencyContact,
+    bloodGroup: $bloodGroup,
+    joiningDate: $joiningDate,
+    validTill: $validTill,
+    photoUrl: $photoUrl,
+    employeeId: $employeeId
+  })
+}
+
+mutation createIncident($title: String!, $severity: String!, $roomId: String, $description: String, $status: String) @auth(level: PUBLIC) {
+  incident_insert(data: {
+    title: $title,
+    severity: $severity,
+    roomId: $roomId,
+    description: $description,
+    status: $status
+  })
+}
+
+mutation updateIncident($id: UUID!, $status: String!) @auth(level: PUBLIC) {
+  incident_update(id: $id, data: { status: $status })
+}
+
+mutation createRoom($number: String!, $floor: Int!, $type: String!, $status: String!) @auth(level: PUBLIC) {
+  room_insert(data: {
+    number: $number,
+    floor: $floor,
+    type: $type,
+    status: $status
+  })
+}
+
+mutation updateRoom($id: UUID!, $number: String, $floor: Int, $type: String, $status: String) @auth(level: PUBLIC) {
+  room_update(id: $id, data: {
+    number: $number,
+    floor: $floor,
+    type: $type,
+    status: $status
+  })
+}
+
+mutation deleteRoom($id: UUID!) @auth(level: PUBLIC) {
+  room_delete(id: $id)
+}
+
+mutation deleteGuest($id: UUID!) @auth(level: PUBLIC) {
+  guest_delete(id: $id)
+}
+
+mutation deleteStaff($id: UUID!) @auth(level: PUBLIC) {
+  staff_delete(id: $id)
+}
+
+mutation deleteIncident($id: UUID!) @auth(level: PUBLIC) {
+  incident_delete(id: $id)
+}
+
+mutation updateGuestPassword($id: UUID!, $loginPassword: String) @auth(level: PUBLIC) {
+  guest_update(id: $id, data: { loginPassword: $loginPassword })
+}
+
+mutation updateStaffPassword($id: UUID!, $loginPassword: String) @auth(level: PUBLIC) {
+  staff_update(id: $id, data: { loginPassword: $loginPassword })
+}
+
+mutation createGuestFull(
+  $name: String!, 
+  $roomNumber: String, 
+  $roomId: UUID, 
+  $idNumber: String, 
+  $contact: String, 
+  $address: String, 
+  $status: String!, 
+  $checkOut: Timestamp, 
+  $loginToken: String, 
+  $email: String, 
+  $loginEmail: String, 
+  $loginPassword: String, 
+  $firebaseUid: String,
+  $qrPayload: String,
+  $photoUrl: String
+) @auth(level: PUBLIC) {
+  guest_insert(data: {
+    name: $name,
+    roomNumber: $roomNumber,
+    roomId: $roomId,
+    idNumber: $idNumber,
+    contact: $contact,
+    address: $address,
+    status: $status,
+    checkOut: $checkOut,
+    loginToken: $loginToken,
+    email: $email,
+    loginEmail: $loginEmail,
+    loginPassword: $loginPassword,
+    firebaseUid: $firebaseUid,
+    qrPayload: $qrPayload,
+    photoUrl: $photoUrl
+  })
+}
+
+mutation createSecurityProfile(
+  $referenceId: String!,
+  $name: String!,
+  $role: String!,
+  $photoUrl: String!,
+  $facialFeatures: String
+) @auth(level: PUBLIC) {
+  securityProfile_insert(data: {
+    referenceId: $referenceId,
+    name: $name,
+    role: $role,
+    photoUrl: $photoUrl,
+    facialFeatures: $facialFeatures
+  })
+}

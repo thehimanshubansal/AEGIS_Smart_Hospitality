@@ -1,0 +1,329 @@
+# dataconnect/example/queries.gql
+
+query getUserLogin($firebaseUid: String!) @auth(level: PUBLIC) {
+  userLogin(key: { firebaseUid: $firebaseUid }) {
+    firebaseUid
+    email
+    displayName
+    role
+    lastLogin
+    createdAt
+  }
+}
+
+query listUserLogins @auth(level: PUBLIC) {
+  userLogins {
+    firebaseUid
+    email
+    displayName
+    role
+  }
+}
+
+query getUserLoginByEmail($email: String!) @auth(level: PUBLIC) {
+  userLogins(where: { email: { eq: $email } }) {
+    firebaseUid
+    email
+    displayName
+    role
+  }
+}
+
+query getGuestByUid($uid: String!) @auth(level: PUBLIC) {
+  guests(where: { firebaseUid: { eq: $uid } }) {
+    id
+    name
+    email
+    roomNumber
+    loginEmail
+    loginPassword
+    idNumber
+    contact
+    address
+    status
+    checkIn
+    checkOut
+    loginToken
+    qrPayload
+    firebaseUid
+    photoUrl
+    createdAt
+    room {
+      id
+      number
+      floor
+    }
+  }
+}
+
+query getGuestByEmail($email: String!) @auth(level: PUBLIC) {
+  guests(where: { email: { eq: $email } }) {
+    id
+    name
+    email
+    roomNumber
+    status
+    checkIn
+    checkOut
+    loginEmail
+    loginPassword
+    idNumber
+    contact
+    address
+    loginToken
+    qrPayload
+    firebaseUid
+    photoUrl
+    createdAt
+  }
+}
+
+query getStaffByUid($uid: String!) @auth(level: PUBLIC) {
+  staffs(where: { firebaseUid: { eq: $uid } }) {
+    id
+    employeeId
+    name
+    email
+    firebaseUid
+    role
+    department
+    phone
+    emergencyContact
+    bloodGroup
+    joiningDate
+    validTill
+    photoUrl
+    status
+    createdAt
+  }
+}
+
+query getStaffByEmail($email: String!) @auth(level: PUBLIC) {
+  staffs(where: { email: { eq: $email } }) {
+    id
+    employeeId
+    name
+    email
+    firebaseUid
+    role
+    department
+    phone
+    emergencyContact
+    bloodGroup
+    joiningDate
+    validTill
+    photoUrl
+    status
+    createdAt
+  }
+}
+
+query listActiveIncidents @auth(level: PUBLIC) {
+  incidents(where: { status: { eq: "Active" } }, orderBy: [{ timestamp: DESC }]) {
+    id
+    title
+    severity
+    status
+    timestamp
+    roomId
+    description
+  }
+}
+
+query listIncidents @auth(level: PUBLIC) {
+  incidents(orderBy: [{ timestamp: DESC }]) {
+    id
+    title
+    severity
+    status
+    timestamp
+    roomId
+    description
+  }
+}
+
+query listRooms @auth(level: PUBLIC) {
+  rooms(orderBy: [{ floor: ASC }, { number: ASC }]) {
+    id
+    number
+    floor
+    type
+    status
+    guests_on_room {
+      id
+      name
+      checkIn
+      createdAt
+    }
+  }
+}
+
+query listGuests @auth(level: PUBLIC) {
+  guests(orderBy: [{ checkOut: ASC }, { createdAt: DESC }]) {
+    id
+    name
+    email
+    roomNumber
+    status
+    checkIn
+    checkOut
+    loginEmail
+    loginPassword
+    idNumber
+    contact
+    address
+    loginToken
+    qrPayload
+    firebaseUid
+    photoUrl
+    createdAt
+    room {
+      id
+      number
+    }
+  }
+}
+
+query listStaff @auth(level: PUBLIC) {
+  staffs(orderBy: [{ createdAt: DESC }]) {
+    id
+    employeeId
+    name
+    email
+    loginPassword
+    firebaseUid
+    role
+    department
+    phone
+    emergencyContact
+    bloodGroup
+    joiningDate
+    validTill
+    photoUrl
+    status
+    createdAt
+  }
+}
+
+query getStaffByEmployeeId($employeeId: String!) @auth(level: PUBLIC) {
+  staffs(where: { employeeId: { eq: $employeeId } }) {
+    id
+    employeeId
+    name
+    email
+    loginPassword
+    role
+    department
+    phone
+    emergencyContact
+    bloodGroup
+    joiningDate
+    validTill
+    photoUrl
+    status
+    createdAt
+  }
+}
+
+query getGuestByLoginToken($loginToken: String!) @auth(level: PUBLIC) {
+  guests(where: { loginToken: { eq: $loginToken } }) {
+    id
+    name
+    email
+    roomNumber
+    status
+    checkIn
+    checkOut
+    firebaseUid
+    loginEmail
+    loginPassword
+    idNumber
+    contact
+    address
+    photoUrl
+    qrPayload
+  }
+}
+
+query getGuestById($id: UUID!) @auth(level: PUBLIC) {
+  guest(id: $id) {
+    id
+    name
+    email
+    roomNumber
+    status
+    checkIn
+    checkOut
+    firebaseUid
+    loginEmail
+    loginPassword
+    idNumber
+    contact
+    address
+    loginToken
+    photoUrl
+    qrPayload
+    roomId
+    room {
+      id
+    }
+  }
+}
+
+query getRoomById($id: UUID!) @auth(level: PUBLIC) {
+  room(id: $id) {
+    id
+    number
+    floor
+    type
+    status
+    guests_on_room {
+      id
+      name
+      status
+    }
+  }
+}
+
+query getIncidentById($id: UUID!) @auth(level: PUBLIC) {
+  incident(id: $id) {
+    id
+    title
+    severity
+    status
+    timestamp
+    roomId
+    description
+  }
+}
+
+query getStaffById($id: UUID!) @auth(level: PUBLIC) {
+  staff(id: $id) {
+    id
+    employeeId
+    name
+    email
+    firebaseUid
+    role
+    department
+    phone
+    emergencyContact
+    bloodGroup
+    joiningDate
+    validTill
+    photoUrl
+    status
+    createdAt
+  }
+}
+
+query listSecurityProfiles @auth(level: PUBLIC) {
+  securityProfiles(orderBy: [{ createdAt: DESC }]) {
+    id
+    referenceId
+    name
+    role
+    photoUrl
+    createdAt
+  }
+}

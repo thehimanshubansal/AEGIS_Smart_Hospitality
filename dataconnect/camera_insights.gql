@@ -1,0 +1,33 @@
+# dataconnect/queries.gql
+
+# Mutation to create a camera insight
+mutation CreateCameraInsight(
+  $cameraId: String!,
+  $observation: String!,
+  $analysis: String!,
+  $decision: String,
+  $severity: String!,
+  $metadata: String
+) {
+  cameraInsight_insert(data: {
+    cameraId: $cameraId,
+    observation: $observation,
+    analysis: $analysis,
+    decision: $decision,
+    severity: $severity,
+    metadata: $metadata
+  })
+}
+
+# Query to list insights for a camera
+query ListCameraInsights($cameraId: String!) {
+  cameraInsights(where: { cameraId: { eq: $cameraId } }, orderBy: [{ timestamp: DESC }], limit: 50) {
+    id
+    timestamp
+    observation
+    analysis
+    decision
+    severity
+    metadata
+  }
+}

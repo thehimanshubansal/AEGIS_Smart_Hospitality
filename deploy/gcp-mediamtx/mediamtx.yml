@@ -1,0 +1,86 @@
+logLevel: info
+
+authInternalUsers:
+  - user: any
+    pass:
+    ips: []
+    permissions:
+      - action: publish
+        path:
+      - action: read
+        path:
+      - action: playback
+        path:
+      - action: api
+        path:
+
+api: yes
+apiAddress: :9997
+apiAllowOrigins:
+  - "*"
+  - http://localhost:3000
+
+hls: yes
+hlsAddress: :8888
+hlsAllowOrigins:
+  - "*"
+  - http://localhost:3000
+
+webrtc: yes
+webrtcAddress: :8889
+webrtcAllowOrigins:
+  - "*"
+  - http://localhost:3000
+webrtcLocalUDPAddress: :8189
+logLevel: info
+
+authInternalUsers:
+  - user: any
+    pass:
+    ips: []
+    permissions:
+      - action: publish
+        path:
+      - action: read
+        path:
+      - action: playback
+        path:
+      - action: api
+        path:
+
+api: yes
+apiAddress: :9997
+apiAllowOrigins:
+  - https://aegisshield-427243605190.europe-west1.run.app
+  - https://aegisshield-qt4y6ncg7a-ew.a.run.app
+  - http://localhost:3000
+
+hls: yes
+hlsAddress: :8888
+hlsAllowOrigins:
+  - https://aegisshield-427243605190.europe-west1.run.app
+  - https://aegisshield-qt4y6ncg7a-ew.a.run.app
+  - http://localhost:3000
+
+webrtc: yes
+webrtcAddress: :8889
+webrtcAllowOrigins:
+  - https://aegisshield-427243605190.europe-west1.run.app
+  - https://aegisshield-qt4y6ncg7a-ew.a.run.app
+  - http://localhost:3000
+webrtcLocalUDPAddress: :8189
+webrtcLocalTCPAddress: :8189
+webrtcAdditionalHosts:
+  - 35.193.60.247
+webrtcICEServers2:
+  - url: stun:stun.l.google.com:19302
+
+paths:
+  all:
+    source: publisher
+  phone-cctv:
+    source: publisher
+  live/phone:
+    source: publisher
+  sec_live/phone:
+    source: publisher

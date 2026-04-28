@@ -1,0 +1,97 @@
+# dataconnect/schema/schema.gql
+
+# 1. Define the models based on the previous Prisma schema
+
+type Incident @table {
+  id: UUID! @default(expr: "uuidV4()")
+  title: String!
+  severity: String!
+  status: String! @default(value: "Active")
+  timestamp: Timestamp! @default(expr: "request.time")
+  roomId: String
+  description: String
+}
+
+type Room @table {
+  id: UUID! @default(expr: "uuidV4()")
+  number: String! @unique
+  floor: Int!
+  type: String!
+  status: String! @default(value: "vacant")
+}
+
+type Guest @table {
+  id: UUID! @default(expr: "uuidV4()")
+  name: String!
+  roomNumber: String
+  idNumber: String
+  contact: String
+  address: String
+  status: String! @default(value: "Booked")
+  checkIn: Timestamp! @default(expr: "request.time")
+  checkOut: Timestamp
+  loginToken: String @unique
+  loginEmail: String @unique
+  loginPassword: String
+  qrPayload: String
+  email: String @unique
+  firebaseUid: String @unique
+  photoUrl: String
+  createdAt: Timestamp! @default(expr: "request.time")
+  
+  # Relationship to Room
+  roomId: UUID
+  room: Room @ref(fields: ["roomId"], references: ["id"])
+}
+
+type Staff @table {
+  id: UUID! @default(expr: "uuidV4()")
+  employeeId: String @unique
+  name: String!
+  email: String @unique
+  loginPassword: String
+  firebaseUid: String @unique
+  role: String! @default(value: "Staff")
+  department: String
+  phone: String
+  emergencyContact: String
+  bloodGroup: String
+  joiningDate: Timestamp! @default(expr: "request.time")
+  validTill: Timestamp
+  photoUrl: String
+  status: String! @default(value: "Active")
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type UserLogin @table(key: ["firebaseUid"]) {
+  firebaseUid: String!
+  email: String!
+  displayName: String
+  role: String! @default(value: "guest")
+  lastLogin: Timestamp! @default(expr: "request.time")
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
+type CameraInsight @table {
+  id: UUID! @default(expr: "uuidV4()")
+  cameraId: String!
+  timestamp: Timestamp! @default(expr: "request.time")
+  observation: String!
+  analysis: String!
+  decision: String
+  severity: String! # "info", "warning", "critical"
+  metadata: String  # JSON blob for additional facts
+}
+
+# Security & Facial Recognition
+type SecurityProfile @table {
+  id: UUID! @default(expr: "uuidV4()")
+  referenceId: String @unique # employeeId or guestEmail
+  name: String!
+  role: String!
+  photoUrl: String!
+  facialFeatures: String # Textual description or metadata
+  status: String! @default(value: "active")
+  createdAt: Timestamp! @default(expr: "request.time")
+}
+
