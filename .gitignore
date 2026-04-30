@@ -53,3 +53,5 @@ next-env.d.ts
 
 pglite-debug.log
 dataconnect-debug.log
+
+cloudbuild.yaml
